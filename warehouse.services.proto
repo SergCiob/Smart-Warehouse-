@@ -1,0 +1,54 @@
+syntax = "proto3";
+
+package warehouse_management;
+
+// Inventory Operations 
+service InventoryOperations {
+  rpc InspectStock (InventoryQuery) returns (InventoryStatus);
+  rpc ModifyStock (StockAdjustment) returns (AdjustmentResult);
+}
+
+// Order Fulfillment 
+service OrderFulfillment {
+  rpc ExecuteOrder (PurchaseRequest) returns (PurchaseResponse);
+}
+
+// Shipping Management 
+service ShippingManagement {
+  rpc ArrangeShipping (DeliveryRequest) returns (DeliveryResponse);
+}
+
+
+message InventoryQuery {
+  string product_id = 1;
+}
+
+message InventoryStatus {
+  int32 quantity = 1;
+}
+
+message StockAdjustment {
+  string product_id = 1;
+  int32 quantity = 2;
+}
+
+message AdjustmentResult {
+  bool success = 1;
+}
+
+message PurchaseRequest {
+  string product_id = 1;
+  int32 order_quantity = 2;
+}
+
+message PurchaseResponse {
+  bool success = 1;
+}
+
+message DeliveryRequest {
+  string order_id = 1;
+}
+
+message DeliveryResponse {
+  bool scheduled = 1;
+}
